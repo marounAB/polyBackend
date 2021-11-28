@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-require('mongoose-currency').loadType(mongoose);
+//require('mongoose-currency').loadType(mongoose);
 
 const appointmentSchema = new Schema({
     idDoctor: {
@@ -32,6 +32,6 @@ const appointmentSchema = new Schema({
     timestamps: true
 });
 
-var Doctors = mongoose.model('Doctor', doctorSchema);
+var Appointments = mongoose.model('Appointments', appointmentSchema);
 
-module.exports = Doctors;
+module.exports = Appointments;

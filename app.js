@@ -7,17 +7,16 @@ var session = require('express-session');
 var FileStore = require('session-file-store')(session);
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-// var appointmentRouter = require('./routes/appointmentRouter');
-// var availabilityRouter = require('./routes/availabilityRouter');
+var appointmentRouter = require('./routes/appointmentRouter');
+var availabilityRouter = require('./routes/availabilityRouter');
 var doctorRouter = require('./routes/doctorRouter');
-// var patientRouter = require('./routes/patientRouter');
-// var professionRouter = require('./routes/professionRouter');
-// var specialityRouter = require('./routes/specialityRouter');
-// var timeslotRouter = require('./routes/timeslotRouter');
+var patientRouter = require('./routes/patientRouter');
+var professionRouter = require('./routes/professionRouter');
+var specialityRouter = require('./routes/specialityRouter');
+var timeslotRouter = require('./routes/timeslotRouter');
 
 const mongoose = require('mongoose');
 
-const Doctors = require("./models/doctors");
 
 const url = 'mongodb+srv://maroun:haha123@polyclinique.eqpxz.mongodb.net/polyclinique?retryWrites=true&w=majority';
 const connect = mongoose.connect(url);
@@ -50,13 +49,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-// app.use('/appointments', appointmentRouter);
-// app.use('/availabilities', availabilityRouter);
+app.use('/appointments', appointmentRouter);
+app.use('/availabilities', availabilityRouter);
 app.use('/doctors', doctorRouter);
-// app.use('/patients', patientRouter);
-// app.use('professions', professionRouter);
-// app.use('specialities', specialityRouter);
-// app.use('/timeslots', timeslotRouter);
+app.use('/patients', patientRouter);
+app.use('/professions', professionRouter);
+app.use('/specialities', specialityRouter);
+app.use('/timeslots', timeslotRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-require('mongoose-currency').loadType(mongoose);
+//require('mongoose-currency').loadType(mongoose);
 
 const patientSchema = new Schema({
     name: {
