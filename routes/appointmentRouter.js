@@ -32,24 +32,15 @@ appointmentRouter.route('/')
 
     appointmentRouter.route('/:appointmentId')
         .put((req, res, next) => {
-            Appointments.findById(req.params.appointmentId)
-                .then((appointment) => {
-                    if (appointment != null){
-                    appointment.description = req.body.description;
-
-                        appointment.save()
-                            .then((appointment) => {
-                                res.statusCode = 200;
-                                res.setHeader('Content-Type', 'application/json');
-                                res.json(appointment);
-                            }, (err) => next(err));
-                    }
-                    else {
-                        err = new Error('Dish ' + req.params.appointmentId + ' not found');
-                        err.status = 404;
-                        return next(err);
-                }
-            }, (err) => next(err))
+            Appointments.findByIdAndUpdate(req.params.appointmentId, {
+                    $set: req.body
+                }, { new: true })
+                .then((app) => {
+                    res.statusCode = 200;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.json(app);
+    
+                }, (err) => next(err))
                 .catch((err) => next(err));
         })
         .delete((req, res, next) => {

@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-//require('mongoose-currency').loadType(mongoose);
-
 const appointmentSchema = new Schema({
     idDoctor: {
         type: mongoose.Types.ObjectId,

@@ -28,6 +28,16 @@ availabilityRouter.route('/')
                 res.json(av);
             }, (err) => next(err))
             .catch((err) => next(err));
+    })
+    .put((req, res, next) => {
+        res.statusCode = 403;
+        res.setHeader('Content-Type', 'text/plain');
+        res.end('PUT operation not supported on /availabilities');
+    })
+    .delete((req, res, next) => {
+        res.statusCode = 403;
+        res.setHeader('Content-Type', 'text/plain');
+        res.end('DELETE operation not supported on /leaders');
     });
 
     availabilityRouter.route('/:availabilityId')

@@ -25,6 +25,6 @@ const availabilitySchema = new Schema({
     timestamps: true
 });
 
-var Availabilitis = mongoose.model('Availability', availabilitySchema);
+var Availabilities = mongoose.model('Availability', availabilitySchema);
 
-module.exports = Availabilitis;
+module.exports = Availabilities;
