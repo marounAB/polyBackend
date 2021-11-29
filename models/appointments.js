@@ -2,19 +2,19 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const appointmentSchema = new Schema({
-    idDoctor: {
-        type: mongoose.Types.ObjectId,
-        required: true,
-        ref: "Doctor"
-    },
     idPatient: {
         type: mongoose.Types.ObjectId,
         required: true,
         ref: "Patient"
     },
+    idDoctor: {
+        type: mongoose.Types.ObjectId,
+        required: true,
+        ref: "Doctor"
+    },
     idTimeSlot: {
         type: mongoose.Types.ObjectId,
-        required: true.valueOf,
+        required: true,
         ref: "Timeslot"
     },
     date: {
@@ -30,6 +30,6 @@ const appointmentSchema = new Schema({
     timestamps: true
 });
 
-var Appointments = mongoose.model('Appointments', appointmentSchema);
+var Appointments = mongoose.model('Appointment', appointmentSchema);
 
 module.exports = Appointments;
