@@ -24,7 +24,7 @@ const appointmentSchema = new Schema({
     description: {
         type: String,
         required: true,
-        default: ""
+        default: "empty"
     }
 }, {
     timestamps: true
