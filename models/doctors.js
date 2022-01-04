@@ -4,6 +4,8 @@ const Schema = mongoose.Schema;
 // require('mongoose-currency').loadType(mongoose);
 // const Currency = mongoose.Types.Currency;
 
+var passportLocalMongoose = require('passport-local-mongoose');
+
 const doctorSchema = new Schema({
     name: {
         type: String,
@@ -18,14 +20,7 @@ const doctorSchema = new Schema({
         required: true,
         ref: "Speciality"
     },
-    email: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
+   
     admin: {
         type: Boolean,
         required: true,
@@ -44,6 +39,7 @@ const doctorSchema = new Schema({
     timestamps: true
 });
 
+doctorSchema.plugin(passportLocalMongoose);
 var Doctors = mongoose.model('Doctor', doctorSchema);
 
 module.exports = Doctors;

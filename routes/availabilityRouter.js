@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-
+var authenticatePatient = require('../authenticatePatient');
+var authenticateDoctor = require('../authenticateDoctor');
 const Availabilities = require('../models/availabilities');
 
 const availabilityRouter = express.Router();
@@ -19,7 +19,7 @@ availabilityRouter.route('/')
             .catch((err) => next(err));
     })
 
-    .post((req, res, next) => {
+    .post(authenticatePatient.verifyPatient || authenticateDoctor.verifyDoctor,(req, res, next) => {
         Availabilities.create(req.body)
             .then((av) => {
                 console.log('Availabilities added ', av);
@@ -29,19 +29,19 @@ availabilityRouter.route('/')
             }, (err) => next(err))
             .catch((err) => next(err));
     })
-    .put((req, res, next) => {
+    .put(authenticatePatient.verifyPatient || authenticateDoctor.verifyDoctor,(req, res, next) => {
         res.statusCode = 403;
         res.setHeader('Content-Type', 'text/plain');
         res.end('PUT operation not supported on /availabilities');
     })
-    .delete((req, res, next) => {
+    .delete(authenticatePatient.verifyPatient || authenticateDoctor.verifyDoctor,(req, res, next) => {
         res.statusCode = 403;
         res.setHeader('Content-Type', 'text/plain');
         res.end('DELETE operation not supported on /leaders');
     });
 
     availabilityRouter.route('/:availabilityId')
-        .delete((req, res, next) => {
+        .delete(authenticatePatient.verifyPatient || authenticateDoctor.verifyDoctor,(req, res, next) => {
             Availabilities.findByIdAndRemove(req.params.availabilityId)
                 .then((resp) => {
                     res.statusCode = 200;

@@ -2,10 +2,10 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 const cors = require('cors');
-var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
-var FileStore = require('session-file-store')(session);
+var passport = require('passport');
+//var authenticate = require('./authenticate');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var appointmentRouter = require('./routes/appointmentRouter');
@@ -15,11 +15,13 @@ var patientRouter = require('./routes/patientRouter');
 var professionRouter = require('./routes/professionRouter');
 var specialityRouter = require('./routes/specialityRouter');
 var timeslotRouter = require('./routes/timeslotRouter');
+var config = require('./config')
 
 const mongoose = require('mongoose');
 
 
-const url = 'mongodb+srv://maroun:haha123@polyclinique.eqpxz.mongodb.net/polyclinique?retryWrites=true&w=majority';
+//const url = 'mongodb+srv://maroun:haha123@polyclinique.eqpxz.mongodb.net/polyclinique?retryWrites=true&w=majority';
+const url = config.mongoUrl;
 const connect = mongoose.connect(url);
 
 connect.then((db) => {
@@ -27,30 +29,26 @@ connect.then((db) => {
 }, (err) => { console.log(err); });
 
 var app = express();
-app.use(session({
-    name: 'session-id',
-    secret: '12345-67890-09876-54321',
-    saveUninitialized: false,
-    resave: false,
-    store: new FileStore()
-}));
+
 
 app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 
+app.use(passport.initialize());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/appointments', appointmentRouter);
 app.use('/availabilities', availabilityRouter);

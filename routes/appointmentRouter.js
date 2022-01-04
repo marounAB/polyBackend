@@ -1,8 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+var authenticatePatient = require('../authenticatePatient');
+var authenticateDoctor = require('../authenticateDoctor');
 
 const Appointments = require('../models/appointments');
+const { authenticate } = require('passport');
 
 const appointmentRouter = express.Router();
 
@@ -19,7 +21,7 @@ appointmentRouter.route('/')
             .catch((err) => next(err));
     })
 
-    .post((req, res, next) => {
+    .post(authenticatePatient.verifyPatient || authenticateDoctor.verifyDoctor ,(req, res, next) =>  {
         Appointments.create(req.body)
             .then((app) => {
                 console.log('Appointments added ', app);
@@ -31,7 +33,7 @@ appointmentRouter.route('/')
     });
 
     appointmentRouter.route('/:appointmentId')
-        .put((req, res, next) => {
+    .put(authenticatePatient.verifyPatient || authenticateDoctor.verifyDoctor, (req, res, next) => {
             Appointments.findByIdAndUpdate(req.params.appointmentId, {
                     $set: req.body
                 }, { new: true })
@@ -43,7 +45,7 @@ appointmentRouter.route('/')
                 }, (err) => next(err))
                 .catch((err) => next(err));
         })
-        .delete((req, res, next) => {
+        .delete(authenticatePatient.verifyPatient || authenticateDoctor.verifyDoctor, (req, res, next) =>{
             Appointments.findByIdAndRemove(req.params.appointmentId)
                 .then((resp) => {
                     res.statusCode = 200;

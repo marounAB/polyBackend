@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// https://www.npmjs.com/package/passport-local-mongoose
+var passportLocalMongoose = require('passport-local-mongoose');
+
 //require('mongoose-currency').loadType(mongoose);
 
 const patientSchema = new Schema({
@@ -17,14 +20,6 @@ const patientSchema = new Schema({
         required: true,
         ref: "Profession"
     },
-    email: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
     phonenumber: {
         type: String,
         required: true
@@ -33,13 +28,15 @@ const patientSchema = new Schema({
         type: String,
         required: true
     },
-    addres: {
+    address: {
         type: String,
         required: true,
     }
 }, {
     timestamps: true
 });
+
+patientSchema.plugin(passportLocalMongoose);
 
 var Patients = mongoose.model('Patient', patientSchema);
 
