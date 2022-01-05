@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 var passport = require('passport');
-//var authenticate = require('../authenticate');
+var authenticateDoctor = require('../authenticateDoctor');
 
 const Doctors = require('../models/doctors');
 
@@ -19,8 +19,8 @@ doctorRouter.route('/')
             }, (err) => next(err))
             .catch((err) => next(err));
     });
-    doctorRouter.post('/signup', (req, res, next) => {
-        Doctors.register(new Doctors({username: req.body.username, name: req.body.name, surname: req.body.surname, idSpeciality: req.body.idSpeciality,
+    doctorRouter.post(authenticateDoctor.verifyDoctor, authenticateDoctor.verifyAdmin, (req, res, next) => {
+        Doctors.register(new Doctors({username: req.body.email, name: req.body.name, surname: req.body.surname, idSpeciality: req.body.idSpeciality,
          admin: req.body.admin, picture: req.body.picture, price: req.body.price }),
         req.body.password, (err, user) => {
             if(err) {

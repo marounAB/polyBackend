@@ -11,7 +11,10 @@ var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 
 var config = require('./config.js');
 
-passport.use(new LocalStrategy(Patient.authenticate()));
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password'
+}, Patient.authenticate()));
 passport.serializeUser(Patient.serializeUser());
 passport.deserializeUser(Patient.deserializeUser());
 
@@ -39,5 +42,6 @@ exports.jwtPassport = passport.use(new JwtStrategy(opts,
             }
         });
     }));
+
 
 exports.verifyPatient = passport.authenticate('jwt', {session: false});
