@@ -18,8 +18,8 @@ doctorRouter.route('/')
                 res.json(doctors);
             }, (err) => next(err))
             .catch((err) => next(err));
-    });
-    doctorRouter.post(authenticateDoctor.verifyDoctor, authenticateDoctor.verifyAdmin, (req, res, next) => {
+    })
+    .post(authenticateDoctor.verifyDoctor, authenticateDoctor.verifyAdmin, (req, res, next) => {
         Doctors.register(new Doctors({username: req.body.email, name: req.body.name, surname: req.body.surname, idSpeciality: req.body.idSpeciality,
          admin: req.body.admin, picture: req.body.picture, price: req.body.price }),
         req.body.password, (err, user) => {
