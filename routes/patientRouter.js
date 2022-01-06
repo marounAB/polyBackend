@@ -21,7 +21,7 @@ patientRouter.route('/')
     });
 
    patientRouter.post('/signup', (req, res, next) => {
-    Patients.register(new Patients({username: req.body.email, name: req.body.name, surname: 
+    Patients.register(new Patients({username: req.body.username, email: req.body.email, name: req.body.name, surname: 
         req.body.surname, idProfession: req.body.idProfession, phonenumber: req.body.phonenumber, dateofbirth: req.body.dateofbirth,
         address: req.body.address}),
         req.body.password, (err, user) => {

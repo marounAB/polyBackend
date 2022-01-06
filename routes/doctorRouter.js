@@ -20,7 +20,7 @@ doctorRouter.route('/')
             .catch((err) => next(err));
     })
     .post(authenticateDoctor.verifyDoctor, authenticateDoctor.verifyAdmin, (req, res, next) => {
-        Doctors.register(new Doctors({username: req.body.email, name: req.body.name, surname: req.body.surname, idSpeciality: req.body.idSpeciality,
+        Doctors.register(new Doctors({username: req.body.username, email: req.body.email, name: req.body.name, surname: req.body.surname, idSpeciality: req.body.idSpeciality,
          admin: req.body.admin, picture: req.body.picture, price: req.body.price }),
         req.body.password, (err, user) => {
             if(err) {

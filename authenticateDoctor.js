@@ -11,10 +11,7 @@ var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 
 var config = require('./config.js');
 
-passport.use(new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password'
-}, Doctor.authenticate()));
+passport.use(new LocalStrategy(Doctor.authenticate()));
 passport.serializeUser(Doctor.serializeUser());
 passport.deserializeUser(Doctor.deserializeUser());
 

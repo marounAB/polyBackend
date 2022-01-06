@@ -7,6 +7,11 @@ var passportLocalMongoose = require('passport-local-mongoose');
 //require('mongoose-currency').loadType(mongoose);
 
 const patientSchema = new Schema({
+    email: {
+        type: String,
+        required: true
+    },
+    
     name: {
         type: String,
         required: true
